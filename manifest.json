@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Odin Project Editor",
+  "version": "1.0",
+  "description": "Edit and save Odin Project lessons.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/icon-48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.theodinproject.com/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+}
