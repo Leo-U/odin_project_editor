@@ -18,5 +18,8 @@
       "matches": ["*://www.theodinproject.com/*"],
       "js": ["content-script.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }  
 }
