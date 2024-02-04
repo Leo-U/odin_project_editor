@@ -1,4 +1,4 @@
-// Flag to track if the current content is the original
+// Global variable to keep track of the original content
 let isOriginalContent = false;
 
 // Function to toggle edit mode
@@ -7,7 +7,6 @@ function toggleEditMode() {
   if (content) {
     const isEditable = content.isContentEditable;
     content.contentEditable = !isEditable;
-    // Save the original content when first entering edit mode
     if (!isEditable) {
       const url = window.location.href;
       browser.storage.local.get('originalContent', function(result) {
@@ -31,11 +30,17 @@ function saveEditedContent() {
   }
 }
 
-// Function to load saved content
+// Function to load saved content based on last toggled state
 function loadSavedContent() {
   const url = window.location.href;
-  browser.storage.local.get(url, function(result) {
-    if (result[url]) {
+  browser.storage.local.get(['lastToggledToOriginal', url, 'originalContent'], function(result) {
+    if (result.lastToggledToOriginal && result.originalContent) {
+      const content = document.querySelector('.lesson-content');
+      if (content) {
+        content.innerHTML = result.originalContent;
+        isOriginalContent = true;
+      }
+    } else if (result[url]) {
       const content = document.querySelector('.lesson-content');
       if (content) {
         content.innerHTML = result[url];
@@ -57,6 +62,7 @@ function toggleContentVersion() {
         if (result[url]) {
           content.innerHTML = result[url];
           isOriginalContent = false;
+          browser.storage.local.remove('lastToggledToOriginal');
         }
       });
     } else {
@@ -65,6 +71,7 @@ function toggleContentVersion() {
         if (result.originalContent) {
           content.innerHTML = result.originalContent;
           isOriginalContent = true;
+          browser.storage.local.set({ lastToggledToOriginal: true });
         }
       });
     }
