@@ -3,11 +3,18 @@ function toggleEditMode() {
   const content = document.querySelector('.lesson-content'); // Replace '.lesson-content' with the actual selector of the content you want to edit
   if (content) {
     content.contentEditable = !content.isContentEditable;
-    // If we are enabling edit mode, save the current (original) content
-    if (content.isContentEditable) {
-      const originalContent = content.innerHTML;
-      browser.storage.local.set({ originalContent: originalContent });
-    }
+  }
+}
+
+// Function to save the edited content
+function saveEditedContent() {
+  const content = document.querySelector('.lesson-content'); // Ensure this selector matches the content area
+  if (content) {
+    const editedContent = content.innerHTML;
+    const url = window.location.href;
+    browser.storage.local.set({[url]: editedContent}, () => {
+      console.log('Content saved for URL:', url);
+    });
   }
 }
 
@@ -15,7 +22,7 @@ function toggleEditMode() {
 function loadSavedContent() {
   const url = window.location.href;
   // Retrieve the saved content from local storage
-  browser.storage.local.get([url], function(result) {
+  browser.storage.local.get(url, function(result) {
     if (result[url]) {
       const content = document.querySelector('.lesson-content'); // Replace '.lesson-content' with the actual selector of the content you want to edit
       if (content) {
@@ -29,6 +36,8 @@ function loadSavedContent() {
 browser.runtime.onMessage.addListener(request => {
   if (request.action === "toggleEditMode") {
     toggleEditMode();
+  } else if (request.action === "saveContent") {
+    saveEditedContent(); // Added saveEditedContent functionality
   } else if (request.action === "loadSavedContent") {
     loadSavedContent();
   }
