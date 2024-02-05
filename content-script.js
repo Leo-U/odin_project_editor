@@ -14,6 +14,13 @@ function toggleEditMode() {
           browser.storage.local.set({ originalContent: content.innerHTML });
         }
       });
+      // Focus on the content and apply styling to indicate it's editable
+      content.focus();
+      content.style.border = '1px solid blue'; // Example style, adjust as needed
+      content.style.outline = 'none'; // Remove outline on focus
+    } else {
+      // Remove edit styling when toggling off
+      content.style.border = '';
     }
   }
 }
