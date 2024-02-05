@@ -87,9 +87,13 @@ function toggleContentVersion() {
 
 // Function to handle keydown events for shortcuts
 function handleKeyDown(e) {
-  // Check for Ctrl + ` (backtick) key combination
-  if (e.ctrlKey && e.key === '`') {
+  // Check for Ctrl + F1 key combination to toggle edit mode
+  if (e.ctrlKey && e.key === 'F1') {
     toggleEditMode();
+  }
+  // Check for Ctrl + F2 key combination to save
+  else if (e.ctrlKey && e.key === 'F2') {
+    saveEditedContent();
   }
 }
 
