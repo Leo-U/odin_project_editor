@@ -85,6 +85,17 @@ function toggleContentVersion() {
   }
 }
 
+// Function to handle keydown events for shortcuts
+function handleKeyDown(e) {
+  // Check for Ctrl + ` (backtick) key combination
+  if (e.ctrlKey && e.key === '`') {
+    toggleEditMode();
+  }
+}
+
+// Attach the keydown event listener to the document
+document.addEventListener('keydown', handleKeyDown);
+
 // Listener for messages from popup.js
 browser.runtime.onMessage.addListener(request => {
   if (request.action === "toggleEditMode") {
