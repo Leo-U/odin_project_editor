@@ -95,6 +95,10 @@ function handleKeyDown(e) {
   else if (e.ctrlKey && e.key === 'F2') {
     saveEditedContent();
   }
+  // Check for Ctrl + F2 key combination to toggle content mode
+  else if (e.ctrlKey && e.key === 'F3') {
+    toggleContentVersion();
+  }
 }
 
 // Attach the keydown event listener to the document
