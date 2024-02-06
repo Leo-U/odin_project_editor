@@ -1,5 +1,6 @@
 // Global variable to keep track of the original content
 let isOriginalContent = false;
+let isEditModeActive = false; // Track whether edit mode is active
 
 // Function to toggle edit mode
 function toggleEditMode() {
@@ -7,6 +8,8 @@ function toggleEditMode() {
   if (content) {
     const isEditable = content.isContentEditable;
     content.contentEditable = !isEditable;
+    isEditModeActive = !isEditable; // Update the edit mode status
+
     if (!isEditable) {
       const url = window.location.href;
       browser.storage.local.get('originalContent', function(result) {
@@ -95,9 +98,13 @@ function handleKeyDown(e) {
   else if (e.ctrlKey && e.key === 'F2') {
     saveEditedContent();
   }
-  // Check for Ctrl + F2 key combination to toggle content mode
+  // Check for Ctrl + F3 key combination to toggle content version
   else if (e.ctrlKey && e.key === 'F3') {
     toggleContentVersion();
+  }
+  // Check for Escape key to exit edit mode
+  else if (e.key === 'Escape' && isEditModeActive) {
+    toggleEditMode();
   }
 }
 
