@@ -2,26 +2,32 @@
 <html>
 <head>
     <title>Extension Popup</title>
+    
     <style>
         body {
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 10px;
             background-color: #3b3737;
         }
         button {
-            background-color: #638672; /* Green background */
+            background-color: #638672;
+            font-size: 15px;
             color: white;
             padding: 10px 20px;
             margin: 5px 2px;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <button id="toggle-edit">Toggle Edit Mode</button>
-    <button id="save-content">Save Content</button>
-    <button id="toggle-version">Toggle Original/Edited</button>
+    <button id="toggle-edit">Toggle Edit Mode (Ctrl + F1)</button>
+    <button id="save-content">Save Content (Ctrl + F2)</button>
+    <button id="toggle-version">Toggle Original/Edited (Ctrl + F3)</button>
     <script src="popup.js"></script>
 </body>
 </html>
